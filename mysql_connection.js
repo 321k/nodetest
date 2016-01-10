@@ -1,14 +1,14 @@
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
-  user     : 'transferwise',
+  user     : 'root',
   password : 'johansson',
   database : 'gt'
 });
 
 connection.connect();
 
-connection.query('SELECT * from transferwise;', function(err, rows, fields) {
+connection.query('SELECT * from gt.transferwise;', function(err, rows, fields) {
   if (!err)
     console.log('The solution is: ', rows);
   else
