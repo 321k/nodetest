@@ -1,29 +1,43 @@
-var express    = require("express");
- var mysql      = require('mysql');
- var connection = mysql.createConnection({
-   host     : 'localhost',
-   user     : 'root',
-   password : 'johansson',
-   database : 'gt'
- });
- var app = express();
+var express   =    require("express");
+ var mysql     =    require('mysql');
+ var app       =    express();
  
- connection.connect(function(err){
- if(!err) {
-     console.log("Database is connected ... \n\n");  
- } else {
-     console.log("Error connecting database ... \n\n");  
- }
+ var pool      =    mysql.createPool({
+     connectionLimit : 100, //important
+     host     : 'localhost',
+     user     : 'root',
+     password : 'johansson',
+     database : 'gt',
+     debug    :  false
  });
  
- app.get("/",function(req,res){
- connection.query('SELECT * from user LIMIT 2', function(err, rows, fields) {
- connection.end();
-   if (!err)
-     console.log('The solution is: ', rows);
-   else
-     console.log('Error while performing Query.');
+ function handle_database(req,res) {
+     
+     pool.getConnection(function(err,connection){
+         if (err) {
+           connection.release();
+           res.json({"code" : 100, "status" : "Error in connection database"});
+           return;
+         }   
+ 
+         console.log('connected as id ' + connection.threadId);
+         
+         connection.query("select * from transferwise",function(err,rows){
+             connection.release();
+             if(!err) {
+                 res.json(rows);
+             }           
+         });
+ 
+         connection.on('error', function(err) {      
+               res.json({"code" : 100, "status" : "Error in connection database"});
+               return;     
+         });
    });
+ }
+ 
+ app.get("/",function(req,res){-
+         handle_database(req,res);
  });
  
  app.listen(3000);
