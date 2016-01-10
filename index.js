@@ -1,15 +1,7 @@
 
 var express = require('express');
 var mysql = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'johansson',
-  database : 'gt'
-});
-
 var app = express();
-
 var pool      =    mysql.createPool({
     connectionLimit : 100, //important
     host     : 'localhost',
