@@ -22,7 +22,7 @@ function handle_database(req,res) {
  
          console.log('connected as id ' + connection.threadId);
          
-         connection.query("select Date, SVI from transferwise;",function(err,rows){
+         connection.query("select * from transferwise",function(err,rows){
              connection.release();
              if(!err) {
                  res.json(rows);
@@ -36,7 +36,7 @@ function handle_database(req,res) {
    });
  }
  
-  app.get("/",function(req,res){-
+ app.get("/",function(req,res){-
          handle_database(req,res);
  });
  
