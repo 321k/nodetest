@@ -30,7 +30,7 @@ function handle_database(req,res) {
  
          console.log('connected as id ' + connection.threadId);
          
-         connection.query("select * from transferwise;",function(err,rows){
+         connection.query("select Date, SVI from transferwise;",function(err,rows){
              connection.release();
              if(!err) {
                  res.json(rows);
