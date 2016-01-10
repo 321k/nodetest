@@ -8,7 +8,7 @@ var connection = mysql.createConnection({
 
 connection.connect();
 
-connection.query('SELECT * from transferwise', function(err, rows, fields) {
+connection.query('SELECT * from transferwise;', function(err, rows, fields) {
   if (!err)
     console.log('The solution is: ', rows);
   else
