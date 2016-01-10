@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/321k/nodetest#readme",
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "mysql": "^2.5.4"
   }
 }
