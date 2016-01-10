@@ -1,11 +1,32 @@
 
 var express = require('express');
-var app = express();
-
-app.get('/', function (req, res) {
-  res.send('Hello Ninni!');
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+  host     : 'localhost',
+  user     : 'root',
+  password : 'johansson',
+  database : 'gt'
 });
 
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
-})
+var app = express();
+
+ connection.connect(function(err){
+ if(!err) {
+     console.log("Database is connected ... \n\n");  
+ } else {
+     console.log("Error connecting database ... \n\n");  
+ }
+ });
+
+
+ app.get("/",function(req,res){
+ connection.query('select * from gt.transferwise;', function(err, rows, fields) {
+ connection.end();
+   if (!err)
+     console.log('The solution is: ', rows);
+   else
+     console.log('Error while performing Query.');
+   });
+ });
+ 
+ app.listen(3000);
