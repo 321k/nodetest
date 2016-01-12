@@ -1,12 +1,23 @@
-var express   =    require("express");
- var mysql     =    require('mysql');
- var app       =    express();
- 
- var pool      =    mysql.createPool({
+var express   =		require("express");
+var mysql     =		require('mysql');
+var plotly 	  =		require('plotly')("321k", "4nyfiabpvs")
+var path = require('path');
+var app       =		express();
+
+app.set('view engine', 'ejs');
+
+app.use(express.static(path.join(__dirname, 'public'), {
+    maxAge: '1d'
+}));
+app.use(express.static(path.join(__dirname, 'views'), {
+    maxAge: '1d'
+}));
+
+var pool	=		mysql.createPool({
      connectionLimit : 100, //important
      host     : 'localhost',
      user     : 'root',
-     password : 'johansson',
+     password : 'oodixach',
      database : 'gt',
      debug    :  false
  });
@@ -24,11 +35,16 @@ var express   =    require("express");
          
          connection.query("select Date, SVI from transferwise",function(err,rows){
              connection.release();
+             console.log(rows);
              if(!err) {
-                 res.json(rows);
+                res.render('pages/index.ejs', {
+                rows: rows,
+                format_date: format_date
+       });
+				
              }           
          });
- 
+
          connection.on('error', function(err) {      
                res.json({"code" : 100, "status" : "Error in connection database"});
                return;     
@@ -36,8 +52,18 @@ var express   =    require("express");
    });
  }
  
+
  app.get("/",function(req,res){-
          handle_database(req,res);
  });
+
+  app.get('/data', function (req, res) {
+      
+   });
+
+function format_date(date){
+  return date.toISOString();
+}
+ 
  
  app.listen(3000);

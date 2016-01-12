@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+	<link href="http://bootstrap.transferwise.com/dist/css/bootstrap.css">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
+
+<h3>Demo page - Webpack ES6 express boilerplate</h3>
+
+<table class="table">
+	<thead>
+		<th>Date</th><th>SVI</th>
+	</thead>
+	<tbody>
+		<% rows.forEach(function(row){ %>
+			<tr>
+				<td>
+					<%= format_date(row.Date) %>
+				</td>
+				<td>
+					<%= row.SVI %>
+				</td>
+			</tr>
+		<% }) %>
+	</tbody>
+
+</table>
+
+</body>
+</html>
