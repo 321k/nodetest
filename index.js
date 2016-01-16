@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'views'), {
 var pool	=		mysql.createPool({
      connectionLimit : 100, //important
      host     : 'localhost',
-     user     : 'root',
+     user     : 'erik',
      password : 'johansson',
      database : 'gt',
      debug    :  false
