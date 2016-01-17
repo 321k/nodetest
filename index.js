@@ -1,8 +1,9 @@
 var express   =		require("express");
 var mysql     =		require('mysql');
 var plotly 	  =		require('plotly')("321k", "4nyfiabpvs")
-var path = require('path');
+var path      =   require('path');
 var app       =		express();
+var highcharts     =   require('highcharts');
 
 app.set('view engine', 'ejs');
 
@@ -36,6 +37,7 @@ var pool	=		mysql.createPool({
          connection.query("select Date, SVI from transferwise",function(err,rows){
              connection.release();
              console.log(rows);
+             console.log(rows[1].Date);
              if(!err) {
                 res.render('pages/index.ejs', {
                 rows: rows,
@@ -51,7 +53,6 @@ var pool	=		mysql.createPool({
          });
    });
  }
- 
 
  app.get("/",function(req,res){-
          handle_database(req,res);

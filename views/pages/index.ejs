@@ -1,6 +1,8 @@
 <!doctype html>
 <html class="no-js" lang="">
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
 	<link href="http://bootstrap.transferwise.com/dist/css/bootstrap.css">
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -8,10 +10,63 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script>
+$(function () {
+    $('#container').highcharts({
+        title: {
+            text: 'Monthly Average Temperature',
+            x: -20 //center
+        },
+        subtitle: {
+            text: 'Source: WorldClimate.com',
+            x: -20
+        },
+        xAxis: {
+            categories: [
+
+		<% rows.forEach(function(row){ %>
+					'<%= format_date(row.Date) %>',
+		<% }) %>
+
+        ]},
+        yAxis: {
+            title: {
+                text: 'Temperature (°C)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: 'TransferWise',
+            data: [
+				<% rows.forEach(function(row){ %>
+					<%= row.SVI %>,
+				<% }) %>
+            ]
+        }]
+    });
+});
+	</script>
 </head>
 <body>
 
-<h3>erikarsot</h3>
+<h3>Google Trends Watch
+</h3>
+
+<div id="container" style="width:100%; height:400px;"></div>
+
+
+
+
 
 <table class="table">
 	<thead>
@@ -21,7 +76,7 @@
 		<% rows.forEach(function(row){ %>
 			<tr>
 				<td>
-					<%= row.Date %>
+					<%= format_date(row.Date) %>
 				</td>
 				<td>
 					<%= row.SVI %>
