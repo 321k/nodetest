@@ -25,7 +25,7 @@ $(function () {
             categories: [
 
 		<% rows.forEach(function(row){ %>
-					'<%= format_date(row.Date) %>',
+					'<%= row.Date %>',
 		<% }) %>
 
         ]},
