@@ -23,46 +23,78 @@ var pool	=		mysql.createPool({
      debug    :  false
  });
  
- function handle_database(req,res) {
-     
-     pool.getConnection(function(err,connection){
-         if (err) {
-           connection.release();
-           res.json({"code" : 100, "status" : "Error in connection database"});
-           return;
-         }   
+function handle_database(req,res) {     
+  pool.getConnection(function(err,connection){
+    if (err) {
+      connection.release();
+        res.json({"code" : 100, "status" : "Error in connection database"});
+        return;
+    }   
  
-         console.log('connected as id ' + connection.threadId);
+    console.log('connected as id ' + connection.threadId);
          
-         connection.query("select Date, SVI from transferwise",function(err,rows){
-             connection.release();
-             if(!err) {
-                res.render('pages/index.ejs', {
-                rows: rows,
-                format_date: format_date
-       });
-				
-             }           
-         });
+    connection.query("select Date, SVI from transferwise",function(err,rows){
+      connection.release();
+      console.log(rows);
+      console.log(rows[1].Date);
+      if(!err) {
+        res.render('pages/index.ejs', {
+          rows: rows,
+          format_date: format_date
+        });
+      }           
+    });
 
-         connection.on('error', function(err) {      
-               res.json({"code" : 100, "status" : "Error in connection database"});
-               return;     
-         });
-   });
- }
+    connection.on('error', function(err) {      
+      res.json({"code" : 100, "status" : "Error in connection database"});
+      return;     
+    });
+  });
+}
 
- app.get("/",function(req,res){-
-         handle_database(req,res);
- });
+function get_leaderboard(req,res) {     
+  pool.getConnection(function(err,connection){
+    if (err) {
+      connection.release();
+        res.json({"code" : 100, "status" : "Error in connection database"});
+        return;
+    }   
+ 
+    console.log('connected as id ' + connection.threadId);
+         
+    connection.query("select rank, absolute_ratio from leaderboard",function(err,rows){
+      connection.release();
+      console.log(rows);
+      console.log(rows[1].Date);
+      if(!err) {
+        res.render('pages/leaderboard.ejs', {
+          rows: rows,
+          format_date: format_date
+        });
+      }
+    });
 
-  app.get('/data', function (req, res) {
+    connection.on('error', function(err) {      
+      res.json({"code" : 100, "status" : "Error in connection database"});
+      return;     
+    });
+  });
+}
+
+app.get("/",function(req,res){-
+  handle_database(req,res);
+});
+
+app.get('/data', function (req, res) {
       
-   });
+});
+
+app.get('/leaderboard', function (req, res) {
+      get_leaderboard(req, res);
+});
 
 function format_date(date){
   return date.toISOString();
 }
  
- 
- app.listen(3000);
+app.listen(3000);

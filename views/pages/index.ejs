@@ -61,16 +61,16 @@
 
 <table class="table">
 	<thead>
-		<th>Date</th><th>SVI</th>
+		<th>Company</th><th>Rank</th>
 	</thead>
 	<tbody>
 		<% leaderboard_rows.forEach(function(row){ %>
 			<tr>
 				<td>
-					<%= row.rank %>
+					'<%= row.rank %>'
 				</td>
 				<td>
-					<%= row.absolute_ratio %>
+					'<%= row.absolute_ratio %>'
 				</td>
 			</tr>
 		<% }) %>

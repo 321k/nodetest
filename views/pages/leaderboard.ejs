@@ -1,0 +1,36 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<link href="http://bootstrap.transferwise.com/dist/css/bootstrap.css">
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<h3>Google Trends Watch</h3>
+
+<div id="container" style="width:100%; height:400px;"></div>
+
+<table class="table">
+	<thead>
+		<th>Company</th><th>Rank</th>
+	</thead>
+	<tbody>
+		<% leaderboard_rows.forEach(function(row){ %>
+			<tr>
+				<td>
+					<%= row.rank %>
+				</td>
+				<td>
+					<%= row.absolute_ratio %>
+				</td>
+			</tr>
+		<% }) %>
+	</tbody>
+</table>
+
+</body>
+</html>
