@@ -59,25 +59,23 @@
 
 <div id="container" style="width:100%; height:400px;"></div>
 
-<!--
 <table class="table">
 	<thead>
 		<th>Date</th><th>SVI</th>
 	</thead>
 	<tbody>
-		<% rows.forEach(function(row){ %>
+		<% leaderboard_rows.forEach(function(row){ %>
 			<tr>
 				<td>
-					<%= row.Date %>
+					<%= row.rank %>
 				</td>
 				<td>
-					<%= row.SVI %>
+					<%= row.absolute_ratio %>
 				</td>
 			</tr>
 		<% }) %>
 	</tbody>
 </table>
--->
 
 </body>
 </html>
