@@ -36,8 +36,6 @@ var pool	=		mysql.createPool({
          
          connection.query("select Date, SVI from transferwise",function(err,rows){
              connection.release();
-             console.log(rows);
-             console.log(rows[1].Date);
              if(!err) {
                 res.render('pages/index.ejs', {
                 rows: rows,
